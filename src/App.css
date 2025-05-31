@@ -4,7 +4,8 @@ html, body {
 }
 
 html, body, #root {
-  width: 100vw;
+  /* Use 100% width to avoid horizontal scroll and background gaps */
+  width: 100%;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
