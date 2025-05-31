@@ -172,10 +172,12 @@ function App() {
       const used = localStorage.getItem('leela-btn-' + todayKey)
       if (stored) {
         setQuote(stored)
+        saveToHistory(todayKey, stored)
       } else {
         const newQuote = getRandomQuote()
         setQuote(newQuote)
         localStorage.setItem('quote-' + todayKey, newQuote)
+        saveToHistory(todayKey, newQuote)
       }
       if (used) {
         setButtonDisabled(true)
@@ -189,11 +191,21 @@ function App() {
     }
   }, [])
 
+  function saveToHistory(date, quote) {
+    const history = JSON.parse(localStorage.getItem('leelaHistory') || '[]');
+    // Only add if not already present for this date
+    if (!history.some(entry => entry.date === date)) {
+      history.push({ date, quote });
+      localStorage.setItem('leelaHistory', JSON.stringify(history));
+    }
+  }
+
   const handleNewQuote = () => {
     const todayKey = getTodayKey()
     const newQuote = getRandomQuote()
     setQuote(newQuote)
     localStorage.setItem('quote-' + todayKey, newQuote)
+    saveToHistory(todayKey, newQuote)
     setButtonDisabled(true)
     localStorage.setItem('leela-btn-' + todayKey, 'used')
     setUniqueSeen(getUniqueSeenCount());
