@@ -181,16 +181,18 @@ function App() {
         }
       }
       const todayKey = getTodayKey()
-      const stored = localStorage.getItem('quote-' + todayKey)
+      let stored = localStorage.getItem('quote-' + todayKey)
       const used = localStorage.getItem('leela-btn-' + todayKey)
       if (stored) {
         setQuote(stored)
         saveToHistory(todayKey, stored)
       } else {
+        // Always pick a random quote, even if it was seen recently
         const newQuote = getRandomQuote()
         setQuote(newQuote)
         localStorage.setItem('quote-' + todayKey, newQuote)
         saveToHistory(todayKey, newQuote)
+        stored = newQuote;
       }
       if (used) {
         setButtonDisabled(true)
@@ -232,6 +234,7 @@ function App() {
 
   const handleNewQuote = () => {
     const todayKey = getTodayKey()
+    // Always pick a random quote, even if it was seen recently
     const newQuote = getRandomQuote()
     setQuote(newQuote)
     localStorage.setItem('quote-' + todayKey, newQuote)
