@@ -122,6 +122,37 @@ function getTodayKey() {
   return today.toISOString().slice(0, 10) // YYYY-MM-DD
 }
 
+// Register service worker for PWA and notifications
+useEffect(() => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js');
+  }
+}, []);
+
+function requestNotificationPermission() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+}
+
+function showDailyNotification(quote) {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    const todayKey = getTodayKey();
+    const notifiedKey = 'notified-' + todayKey;
+    if (!localStorage.getItem(notifiedKey)) {
+      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({ type: 'SHOW_DAILY_NOTIFICATION' });
+      } else {
+        new Notification('Your Leela Card is ready!', {
+          body: 'Tap to see your daily Leela card.',
+          icon: '/vite.svg',
+        });
+      }
+      localStorage.setItem(notifiedKey, 'yes');
+    }
+  }
+}
+
 function App() {
   const [quote, setQuote] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -152,6 +183,10 @@ function App() {
       if (q) tempHistory.push({ date: key, quote: q })
     }
     setHistory(tempHistory)
+    requestNotificationPermission();
+    if (Notification.permission === 'granted') {
+      showDailyNotification(stored || newQuote);
+    }
   }, [])
 
   const handleNewQuote = () => {
@@ -199,6 +234,12 @@ function App() {
         <a href="/history" style={{ color: '#6366f1', textDecoration: 'underline', fontSize: '1rem' }}>
           History
         </a>
+      </div>
+      <div style={{ marginTop: '2.5rem', color: '#888', fontSize: '0.98rem' }}>
+        <span role="img" aria-label="bell">🔔</span> Enable notifications to get a daily reminder for your Leela card!<br />
+        <span style={{ fontSize: '0.92em' }}>
+          For best experience, <b>add this app to your home screen</b> (PWA) from your browser menu.
+        </span>
       </div>
     </div>
   )
