@@ -151,6 +151,19 @@ function App() {
     localStorage.setItem('leela-btn-' + todayKey, 'used')
   }
 
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Leela Game',
+        text: quote,
+        url: window.location.href
+      });
+    } else {
+      navigator.clipboard.writeText(quote);
+      alert('Quote copied to clipboard!');
+    }
+  };
+
   return (
     <div className="app-container">
       <h1>Leela Game</h1>
@@ -159,6 +172,9 @@ function App() {
       </div>
       <blockquote className="quote">{quote}</blockquote>
       <button onClick={handleNewQuote} disabled={buttonDisabled}>New Leela</button>
+      <button onClick={handleShare} style={{ marginTop: '1rem', background: '#818cf8' }}>
+        Share Leela
+      </button>
       {buttonDisabled && (
         <div style={{ marginTop: '1rem', color: '#6366f1', fontWeight: 500 }}>
           Come again tomorrow for the next Leela card.
