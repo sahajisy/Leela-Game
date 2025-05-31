@@ -56,28 +56,32 @@ html, body, #root {
 
 html[data-theme='light'],
 body[data-theme='light'] {
-  background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
+  background: #e0e7ff;
+  background-image: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
   color: #22223b;
   background-repeat: no-repeat;
   background-size: cover;
 }
 html[data-theme='dark'],
 body[data-theme='dark'] {
-  background: linear-gradient(135deg, #232946 0%, #181824 100%);
+  background: #232946;
+  background-image: linear-gradient(135deg, #232946 0%, #181824 100%);
   color: #f3f4f6;
   background-repeat: no-repeat;
   background-size: cover;
 }
 html[data-theme='purple'],
 body[data-theme='purple'] {
-  background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+  background: #a78bfa;
+  background-image: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
   color: #fff;
   background-repeat: no-repeat;
   background-size: cover;
 }
 html[data-theme='blue'],
 body[data-theme='blue'] {
-  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+  background: #60a5fa;
+  background-image: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
   color: #fff;
   background-repeat: no-repeat;
   background-size: cover;
