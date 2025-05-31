@@ -20,6 +20,15 @@ function LeelaGame() {
         <a href="/history" style={{ color: '#6366f1', textDecoration: 'underline', fontSize: '0.98rem', marginTop: '1.2rem', display: 'inline-block' }}>
           View History
         </a>
+        <br/>
+        <span style={{color:'#6366f1'}}>
+          <b>Note:</b> Notifications are only available on supported browsers (e.g. Chrome, Android, most desktops). iOS Safari and some browsers do not support notifications.
+        </span>
+        <br/>
+        <span style={{color:'#6366f1', display:'block', marginTop:'1.2rem'}}>
+          <span role="img" aria-label="bell">🔔</span> Enable notifications to get a daily reminder for your Leela card!<br />
+          For best experience, <b>add this app to your home screen</b> (PWA) from your browser menu.
+        </span>
       </p>
     </div>
   );

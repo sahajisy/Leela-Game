@@ -220,13 +220,7 @@ function App() {
         </a>
       </div>
       <div style={{ marginTop: '2.5rem', color: '#888', fontSize: '0.98rem' }}>
-        <span role="img" aria-label="bell">🔔</span> Enable notifications to get a daily reminder for your Leela card!<br />
-        <span style={{ fontSize: '0.92em' }}>
-          For best experience, <b>add this app to your home screen</b> (PWA) from your browser menu.<br/>
-          <span style={{color:'#6366f1'}}>
-            <b>Note:</b> Notifications are only available on supported browsers (e.g. Chrome, Android, most desktops). iOS Safari and some browsers do not support notifications.
-          </span>
-        </span>
+        {/* Notification and PWA message moved to About page */}
       </div>
     </div>
   )
