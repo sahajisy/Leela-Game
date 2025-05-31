@@ -127,11 +127,6 @@ function App() {
   const [buttonDisabled, setButtonDisabled] = useState(false)
   const [error, setError] = useState(null)
 
-  // Debug: show if App is rendering
-  if (typeof window !== 'undefined') {
-    window.__LEELA_APP_RENDERED = true;
-  }
-
   useEffect(() => {
     try {
       function requestNotificationPermission() {
@@ -202,11 +197,6 @@ function App() {
 
   return (
     <div className="app-container">
-      <div style={{color: 'red', fontWeight: 600, marginBottom: 8}}>
-        {/* Debug: show if App is rendering */}
-        Leela App Rendered
-        {error && <div style={{color: 'red', marginTop: 8}}>Error: {error}</div>}
-      </div>
       <h1>Leela Game</h1>
       <div style={{ fontSize: '1.05rem', color: '#444', marginBottom: '1.2rem', fontWeight: 500 }}>
         by Sahaja Yogis for Sahaja Yogis
@@ -232,7 +222,10 @@ function App() {
       <div style={{ marginTop: '2.5rem', color: '#888', fontSize: '0.98rem' }}>
         <span role="img" aria-label="bell">🔔</span> Enable notifications to get a daily reminder for your Leela card!<br />
         <span style={{ fontSize: '0.92em' }}>
-          For best experience, <b>add this app to your home screen</b> (PWA) from your browser menu.
+          For best experience, <b>add this app to your home screen</b> (PWA) from your browser menu.<br/>
+          <span style={{color:'#6366f1'}}>
+            <b>Note:</b> Notifications are only available on supported browsers (e.g. Chrome, Android, most desktops). iOS Safari and some browsers do not support notifications.
+          </span>
         </span>
       </div>
     </div>
