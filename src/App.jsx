@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+// Unregister all service workers on load to fix blank screen on revisit
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    registrations.forEach(reg => reg.unregister());
+  });
+}
+
 const QUOTES = [
 "You are a very special type of human race and beautiful patterns are showing in your life, in your lifestyle, in your behavior.", 
 "If a person is very much indulgent and thinks so much of things which are not so important for spirituality, then Kundalini is falling again and again.", 
@@ -125,6 +132,7 @@ function getTodayKey() {
 function App() {
   const [quote, setQuote] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
+  
 
   useEffect(() => {
     // TEMP: Disable service worker registration for Vercel blank screen debug
