@@ -125,54 +125,63 @@ function getTodayKey() {
 function App() {
   const [quote, setQuote] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
-  
+  const [error, setError] = useState(null)
+
+  // Debug: show if App is rendering
+  if (typeof window !== 'undefined') {
+    window.__LEELA_APP_RENDERED = true;
+  }
 
   useEffect(() => {
-    // TEMP: Disable service worker registration for Vercel blank screen debug
-    // if ('serviceWorker' in navigator) {
-    //   navigator.serviceWorker.register('/service-worker.js').catch(() => {
-    //     // Ignore registration errors
-    //   });
-    // }
-    // Notification logic
-    function requestNotificationPermission() {
-      if ('Notification' in window && Notification.permission === 'default') {
-        Notification.requestPermission();
-      }
-    }
-    function showDailyNotification(quote) {
-      if ('Notification' in window && Notification.permission === 'granted') {
-        const todayKey = getTodayKey();
-        const notifiedKey = 'notified-' + todayKey;
-        if (!localStorage.getItem(notifiedKey)) {
-          if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-            navigator.serviceWorker.controller.postMessage({ type: 'SHOW_DAILY_NOTIFICATION' });
-          } else {
-            new Notification('Your Leela Card is ready!', {
-              body: 'Tap to see your daily Leela card.',
-              icon: '/vite.svg',
-            });
-          }
-          localStorage.setItem(notifiedKey, 'yes');
+    try {
+      // TEMP: Disable service worker registration for Vercel blank screen debug
+      // if ('serviceWorker' in navigator) {
+      //   navigator.serviceWorker.register('/service-worker.js').catch(() => {
+      //     // Ignore registration errors
+      //   });
+      // }
+      // Notification logic
+      function requestNotificationPermission() {
+        if ('Notification' in window && Notification.permission === 'default') {
+          Notification.requestPermission();
         }
       }
-    }
-    const todayKey = getTodayKey()
-    const stored = localStorage.getItem('quote-' + todayKey)
-    const used = localStorage.getItem('leela-btn-' + todayKey)
-    if (stored) {
-      setQuote(stored)
-    } else {
-      const newQuote = getRandomQuote()
-      setQuote(newQuote)
-      localStorage.setItem('quote-' + todayKey, newQuote)
-    }
-    if (used) {
-      setButtonDisabled(true)
-    }
-    requestNotificationPermission();
-    if (Notification.permission === 'granted') {
-      showDailyNotification(stored)
+      function showDailyNotification(quote) {
+        if ('Notification' in window && Notification.permission === 'granted') {
+          const todayKey = getTodayKey();
+          const notifiedKey = 'notified-' + todayKey;
+          if (!localStorage.getItem(notifiedKey)) {
+            if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+              navigator.serviceWorker.controller.postMessage({ type: 'SHOW_DAILY_NOTIFICATION' });
+            } else {
+              new Notification('Your Leela Card is ready!', {
+                body: 'Tap to see your daily Leela card.',
+                icon: '/vite.svg',
+              });
+            }
+            localStorage.setItem(notifiedKey, 'yes');
+          }
+        }
+      }
+      const todayKey = getTodayKey()
+      const stored = localStorage.getItem('quote-' + todayKey)
+      const used = localStorage.getItem('leela-btn-' + todayKey)
+      if (stored) {
+        setQuote(stored)
+      } else {
+        const newQuote = getRandomQuote()
+        setQuote(newQuote)
+        localStorage.setItem('quote-' + todayKey, newQuote)
+      }
+      if (used) {
+        setButtonDisabled(true)
+      }
+      requestNotificationPermission();
+      if (Notification.permission === 'granted') {
+        showDailyNotification(stored)
+      }
+    } catch (e) {
+      setError(e.message || String(e))
     }
   }, [])
 
@@ -200,6 +209,11 @@ function App() {
 
   return (
     <div className="app-container">
+      <div style={{color: 'red', fontWeight: 600, marginBottom: 8}}>
+        {/* Debug: show if App is rendering */}
+        Leela App Rendered
+        {error && <div style={{color: 'red', marginTop: 8}}>Error: {error}</div>}
+      </div>
       <h1>Leela Game</h1>
       <div style={{ fontSize: '1.05rem', color: '#444', marginBottom: '1.2rem', fontWeight: 500 }}>
         by Sahaja Yogis for Sahaja Yogis
