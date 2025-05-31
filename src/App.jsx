@@ -133,11 +133,24 @@ function getTodayKey() {
   return today.toISOString().slice(0, 10) // YYYY-MM-DD
 }
 
+function getUniqueSeenCount() {
+  // Collect all unique quotes seen so far (from localStorage)
+  const seen = new Set();
+  Object.keys(localStorage).forEach(key => {
+    if (key.startsWith('quote-')) {
+      const val = localStorage.getItem(key);
+      if (val) seen.add(val);
+    }
+  });
+  return seen.size;
+}
+
 function App() {
   const [quote, setQuote] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
   const [theme, setTheme] = useState(() => localStorage.getItem('leela-theme') || 'light')
   const [error, setError] = useState(null)
+  const [uniqueSeen, setUniqueSeen] = useState(getUniqueSeenCount());
 
   useEffect(() => {
     try {
@@ -197,6 +210,7 @@ function App() {
     localStorage.setItem('quote-' + todayKey, newQuote)
     setButtonDisabled(true)
     localStorage.setItem('leela-btn-' + todayKey, 'used')
+    setUniqueSeen(getUniqueSeenCount());
   }
 
   const handleShare = () => {
@@ -231,6 +245,9 @@ function App() {
         by Sahaja Yogis for Sahaja Yogis
       </div>
       <blockquote className="quote">{quote}</blockquote>
+      <div style={{ margin: '0.5rem 0 1.2rem 0', color: '#6366f1', fontWeight: 500, fontSize: '1.02rem' }}>
+        You have seen {uniqueSeen} out of {QUOTES.length} unique Leela cards.
+      </div>
       <button onClick={handleNewQuote} disabled={buttonDisabled}>New Leela</button>
       <button onClick={handleShare} style={{ marginTop: '1rem', background: '#818cf8' }}>
         Share Leela
@@ -247,9 +264,12 @@ function App() {
         <a href="/history" style={{ color: '#6366f1', textDecoration: 'underline', fontSize: '1rem' }}>
           History
         </a>
+        <a href="https://github.com/sahajisy/leela-game/issues" target="_blank" rel="noopener noreferrer" style={{ color: '#6366f1', textDecoration: 'underline', fontSize: '1rem' }}>
+          Feedback
+        </a>
       </div>
-      <div style={{ marginTop: '2.5rem', color: '#888', fontSize: '0.98rem' }}>
-        {/* Notification and PWA message moved to About page */}
+      <div style={{ marginTop: '1.2rem', color: '#888', fontSize: '0.98rem' }}>
+        Have a suggestion or found a bug? <a href="https://github.com/sahajisy/leela-game/issues" target="_blank" rel="noopener noreferrer" style={{ color: '#6366f1', textDecoration: 'underline' }}>Let us know on GitHub</a>.
       </div>
     </div>
   )
