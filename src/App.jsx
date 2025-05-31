@@ -134,27 +134,20 @@ function App() {
 
   useEffect(() => {
     try {
-      // TEMP: Disable service worker registration for Vercel blank screen debug
-      // if ('serviceWorker' in navigator) {
-      //   navigator.serviceWorker.register('/service-worker.js').catch(() => {
-      //     // Ignore registration errors
-      //   });
-      // }
-      // Notification logic
       function requestNotificationPermission() {
-        if ('Notification' in window && Notification.permission === 'default') {
-          Notification.requestPermission();
+        if (typeof window !== 'undefined' && 'Notification' in window && window.Notification.permission === 'default') {
+          window.Notification.requestPermission();
         }
       }
       function showDailyNotification(quote) {
-        if ('Notification' in window && Notification.permission === 'granted') {
+        if (typeof window !== 'undefined' && 'Notification' in window && window.Notification.permission === 'granted') {
           const todayKey = getTodayKey();
           const notifiedKey = 'notified-' + todayKey;
           if (!localStorage.getItem(notifiedKey)) {
             if (navigator.serviceWorker && navigator.serviceWorker.controller) {
               navigator.serviceWorker.controller.postMessage({ type: 'SHOW_DAILY_NOTIFICATION' });
             } else {
-              new Notification('Your Leela Card is ready!', {
+              new window.Notification('Your Leela Card is ready!', {
                 body: 'Tap to see your daily Leela card.',
                 icon: '/vite.svg',
               });
@@ -177,7 +170,7 @@ function App() {
         setButtonDisabled(true)
       }
       requestNotificationPermission();
-      if (Notification.permission === 'granted') {
+      if (typeof window !== 'undefined' && 'Notification' in window && window.Notification.permission === 'granted') {
         showDailyNotification(stored)
       }
     } catch (e) {
