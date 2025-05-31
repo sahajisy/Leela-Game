@@ -88,20 +88,14 @@ body[data-theme='blue'] {
 }
 
 body[data-theme='light'] .app-container {
-  background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
-  background-color: #e0e7ff;
+  background: #fff;
+  background-image: none;
+  background-color: #fff;
 }
 body[data-theme='dark'] .app-container {
-  background: linear-gradient(135deg, #232946 0%, #181824 100%);
+  background: #232946;
+  background-image: none;
   background-color: #232946;
-}
-body[data-theme='purple'] .app-container {
-  background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
-  background-color: #a78bfa;
-}
-body[data-theme='blue'] .app-container {
-  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
-  background-color: #60a5fa;
 }
 
 .app-container {
