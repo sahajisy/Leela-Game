@@ -48,4 +48,4 @@ A mobile-friendly, theme-aware React (Vite) app that displays a daily random quo
 
 ---
 
-Created by Sahaj Balgunde. Inspired by the teachings of Shri Mataji Nirmala Devi.
+Created by Sahaj Balgunde. Inspired by the teachings of H.H Shri Mataji Nirmala Devi.
