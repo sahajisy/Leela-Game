@@ -56,7 +56,7 @@ html, body, #root {
 
 html[data-theme='light'],
 body[data-theme='light'] {
-  background: #e0e7ff;
+  background: #e0e7ff; 
   background-image: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
   color: #22223b;
   background-repeat: no-repeat;

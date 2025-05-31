@@ -142,6 +142,10 @@ function App() {
   const [buttonDisabled, setButtonDisabled] = useState(false)
   const [error, setError] = useState(null)
   const [uniqueSeen, setUniqueSeen] = useState(getUniqueSeenCount());
+  const [firstVisit, setFirstVisit] = useState(() => {
+    const todayKey = getTodayKey();
+    return !localStorage.getItem('quote-' + todayKey);
+  });
 
   // Calculate time left for new card (live countdown)
   const [timeLeft, setTimeLeft] = useState(getTimeUntilMidnight());
@@ -185,14 +189,11 @@ function App() {
       const used = localStorage.getItem('leela-btn-' + todayKey)
       if (stored) {
         setQuote(stored)
+        setFirstVisit(false)
         saveToHistory(todayKey, stored)
       } else {
-        // Always pick a random quote, even if it was seen recently
-        const newQuote = getRandomQuote()
-        setQuote(newQuote)
-        localStorage.setItem('quote-' + todayKey, newQuote)
-        saveToHistory(todayKey, newQuote)
-        stored = newQuote;
+        setQuote('')
+        setFirstVisit(true)
       }
       if (used) {
         setButtonDisabled(true)
@@ -237,6 +238,7 @@ function App() {
     // Always pick a random quote, even if it was seen recently
     const newQuote = getRandomQuote()
     setQuote(newQuote)
+    setFirstVisit(false)
     localStorage.setItem('quote-' + todayKey, newQuote)
     saveToHistory(todayKey, newQuote)
     setButtonDisabled(true)
@@ -263,15 +265,22 @@ function App() {
       <div style={{ fontSize: '1.05rem', color: '#444', marginBottom: '1.2rem', fontWeight: 500 }}>
         by Sahaja Yogis for Sahaja Yogis
       </div>
-      <blockquote className="quote">{quote}</blockquote>
+      <blockquote className="quote">
+        {firstVisit ? (
+          <span style={{color:'#888', fontStyle:'normal'}}>
+            Welcome to Leela Game!<br />
+            Click <b>New Leela</b> to start your journey.
+          </span>
+        ) : quote}
+      </blockquote>
       <div style={{ margin: '0.5rem 0 1.2rem 0', color: '#6366f1', fontWeight: 500, fontSize: '1.02rem' }}>
         You have seen {uniqueSeen} out of {QUOTES.length} unique Leela cards.
       </div>
-      <button onClick={handleNewQuote} disabled={buttonDisabled}>New Leela</button>
-      <button onClick={handleShare} style={{ marginTop: '1rem', background: '#818cf8' }}>
+      <button onClick={handleNewQuote} disabled={buttonDisabled && !firstVisit}>New Leela</button>
+      <button onClick={handleShare} style={{ marginTop: '1rem', background: '#818cf8' }} disabled={firstVisit}>
         Share Leela
       </button>
-      {buttonDisabled && (
+      {buttonDisabled && !firstVisit && (
         <div style={{ marginTop: '1rem', color: '#6366f1', fontWeight: 500 }}>
           Come again tomorrow for the next Leela card.<br />
           <span style={{color:'#888', fontWeight:400, fontSize:'0.98rem'}}>
