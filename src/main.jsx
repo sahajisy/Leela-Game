@@ -6,8 +6,8 @@ import LeelaGame from './LeelaGame.jsx'
 import History from './History.jsx'
 
 const path = window.location.pathname
-const showLeela = path.includes('leela')
-const showHistory = path.includes('history')
+const showLeela = path === '/leela';
+const showHistory = path === '/history';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -122,43 +122,40 @@ function getTodayKey() {
   return today.toISOString().slice(0, 10) // YYYY-MM-DD
 }
 
-// Register service worker for PWA and notifications
-useEffect(() => {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js');
-  }
-}, []);
-
-function requestNotificationPermission() {
-  if ('Notification' in window && Notification.permission === 'default') {
-    Notification.requestPermission();
-  }
-}
-
-function showDailyNotification(quote) {
-  if ('Notification' in window && Notification.permission === 'granted') {
-    const todayKey = getTodayKey();
-    const notifiedKey = 'notified-' + todayKey;
-    if (!localStorage.getItem(notifiedKey)) {
-      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage({ type: 'SHOW_DAILY_NOTIFICATION' });
-      } else {
-        new Notification('Your Leela Card is ready!', {
-          body: 'Tap to see your daily Leela card.',
-          icon: '/vite.svg',
-        });
-      }
-      localStorage.setItem(notifiedKey, 'yes');
-    }
-  }
-}
-
 function App() {
   const [quote, setQuote] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
-  const [history, setHistory] = useState([])
 
   useEffect(() => {
+    // TEMP: Disable service worker registration for Vercel blank screen debug
+    // if ('serviceWorker' in navigator) {
+    //   navigator.serviceWorker.register('/service-worker.js').catch(() => {
+    //     // Ignore registration errors
+    //   });
+    // }
+    // Notification logic
+    function requestNotificationPermission() {
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    }
+    function showDailyNotification(quote) {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        const todayKey = getTodayKey();
+        const notifiedKey = 'notified-' + todayKey;
+        if (!localStorage.getItem(notifiedKey)) {
+          if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage({ type: 'SHOW_DAILY_NOTIFICATION' });
+          } else {
+            new Notification('Your Leela Card is ready!', {
+              body: 'Tap to see your daily Leela card.',
+              icon: '/vite.svg',
+            });
+          }
+          localStorage.setItem(notifiedKey, 'yes');
+        }
+      }
+    }
     const todayKey = getTodayKey()
     const stored = localStorage.getItem('quote-' + todayKey)
     const used = localStorage.getItem('leela-btn-' + todayKey)
@@ -172,20 +169,9 @@ function App() {
     if (used) {
       setButtonDisabled(true)
     }
-    // Load history for last 7 days
-    const days = 7
-    const tempHistory = []
-    for (let i = 0; i < days; i++) {
-      const d = new Date()
-      d.setDate(d.getDate() - i)
-      const key = d.toISOString().slice(0, 10)
-      const q = localStorage.getItem('quote-' + key)
-      if (q) tempHistory.push({ date: key, quote: q })
-    }
-    setHistory(tempHistory)
     requestNotificationPermission();
     if (Notification.permission === 'granted') {
-      showDailyNotification(stored || newQuote);
+      showDailyNotification(stored)
     }
   }, [])
 

@@ -1,6 +1,6 @@
 {
-  "name": "Your App Name",
-  "short_name": "AppName",
+  "name": "Leela Game",
+  "short_name": "Leela",
   "description": "A brief description of your app",
   "start_url": ".",
   "display": "standalone",
@@ -8,9 +8,14 @@
   "theme_color": "#6366f1",
   "icons": [
     {
-      "src": "/vite.svg",
+      "src": "/vite-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml"
+      "type": "image/png"
+    },
+    {
+      "src": "/vite-192.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }
