@@ -125,6 +125,7 @@ function getTodayKey() {
 function App() {
   const [quote, setQuote] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
+  const [history, setHistory] = useState([])
 
   useEffect(() => {
     const todayKey = getTodayKey()
@@ -140,6 +141,17 @@ function App() {
     if (used) {
       setButtonDisabled(true)
     }
+    // Load history for last 7 days
+    const days = 7
+    const tempHistory = []
+    for (let i = 0; i < days; i++) {
+      const d = new Date()
+      d.setDate(d.getDate() - i)
+      const key = d.toISOString().slice(0, 10)
+      const q = localStorage.getItem('quote-' + key)
+      if (q) tempHistory.push({ date: key, quote: q })
+    }
+    setHistory(tempHistory)
   }, [])
 
   const handleNewQuote = () => {
@@ -180,9 +192,12 @@ function App() {
           Come again tomorrow for the next Leela card.
         </div>
       )}
-      <div style={{ marginTop: '2rem' }}>
+      <div style={{ marginTop: '2rem', display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
         <a href="/leela" style={{ color: '#6366f1', textDecoration: 'underline', fontSize: '1rem' }}>
           About Leela Game
+        </a>
+        <a href="/history" style={{ color: '#6366f1', textDecoration: 'underline', fontSize: '1rem' }}>
+          History
         </a>
       </div>
     </div>

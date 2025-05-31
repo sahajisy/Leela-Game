@@ -16,6 +16,10 @@ function LeelaGame() {
         <a href="https://github.com/sahajisy/leela-game" target="_blank" rel="noopener noreferrer" style={{ color: '#6366f1', textDecoration: 'underline', fontSize: '0.98rem' }}>
           View on GitHub
         </a>
+        <br />
+        <a href="/history" style={{ color: '#6366f1', textDecoration: 'underline', fontSize: '0.98rem', marginTop: '1.2rem', display: 'inline-block' }}>
+          View History
+        </a>
       </p>
     </div>
   );
