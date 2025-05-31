@@ -7,6 +7,12 @@
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
   color: #22223b;
   font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  box-sizing: border-box;
 }
 
 .leela-container h1 {
@@ -32,5 +38,32 @@
 @media (max-width: 600px) {
   .leela-container {
     padding: 1.2rem 0.3rem;
+    min-height: 90vh;
   }
+}
+
+body[data-theme='light'] .leela-container {
+  background: #f8fafc;
+  color: #22223b;
+}
+body[data-theme='dark'] .leela-container {
+  background: #232946;
+  color: #f3f4f6;
+}
+body[data-theme='purple'] .leela-container {
+  background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+  color: #fff;
+}
+body[data-theme='blue'] .leela-container {
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+  color: #fff;
+}
+
+body[data-theme='dark'] .leela-container a,
+body[data-theme='purple'] .leela-container a,
+body[data-theme='blue'] .leela-container a {
+  color: #a5b4fc;
+}
+body[data-theme='light'] .leela-container a {
+  color: #6366f1;
 }
