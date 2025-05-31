@@ -54,18 +54,53 @@ html, body, #root {
   color: #888;
 }
 
-html,
-body {
-  background: #f8faff;
+html[data-theme='light'],
+body[data-theme='light'] {
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
   color: #22223b;
   background-repeat: no-repeat;
   background-size: cover;
 }
+html[data-theme='dark'],
+body[data-theme='dark'] {
+  background: #232946;
+  background-image: linear-gradient(135deg, #232946 0%, #181824 100%);
+  color: #f3f4f6;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+html[data-theme='purple'],
+body[data-theme='purple'] {
+  background: #a78bfa;
+  background-image: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+  color: #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+html[data-theme='blue'],
+body[data-theme='blue'] {
+  background: #60a5fa;
+  background-image: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+  color: #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
-body .app-container {
-  background: #fff;
-  background-image: none;
-  color: #22223b;
+body[data-theme='light'] .app-container {
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
+  background-color: #e0e7ff;
+}
+body[data-theme='dark'] .app-container {
+  background: linear-gradient(135deg, #232946 0%, #181824 100%);
+  background-color: #232946;
+}
+body[data-theme='purple'] .app-container {
+  background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+  background-color: #a78bfa;
+}
+body[data-theme='blue'] .app-container {
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+  background-color: #60a5fa;
 }
 
 .app-container {
@@ -95,8 +130,8 @@ h1 {
   font-size: 1.1rem;
   font-style: italic;
   margin: 2rem 0 2.5rem 0;
-  color: #3730a3;
-  background: #f8faff;
+  color: #22223b;
+  background: #fff;
   border-radius: 10px;
   padding: 1.2rem 1rem;
   box-shadow: 0 2px 8px rgba(55,48,163,0.07);
