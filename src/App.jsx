@@ -143,6 +143,19 @@ function App() {
   const [error, setError] = useState(null)
   const [uniqueSeen, setUniqueSeen] = useState(getUniqueSeenCount());
 
+  // Calculate time left for new card (live countdown)
+  const [timeLeft, setTimeLeft] = useState(getTimeUntilMidnight());
+
+  function getTimeUntilMidnight() {
+    const now = new Date();
+    const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0); // next local midnight
+    const diffMs = midnight - now;
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    return { hours, minutes };
+  }
+
   useEffect(() => {
     try {
       function requestNotificationPermission() {
@@ -191,6 +204,14 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!buttonDisabled) return;
+    const interval = setInterval(() => {
+      setTimeLeft(getTimeUntilMidnight());
+    }, 1000 * 30); // update every 30 seconds
+    return () => clearInterval(interval);
+  }, [buttonDisabled])
+
   function saveToHistory(date, quote) {
     const history = JSON.parse(localStorage.getItem('leelaHistory') || '[]');
     // Only add if not already present for this date
@@ -198,6 +219,15 @@ function App() {
       history.push({ date, quote });
       localStorage.setItem('leelaHistory', JSON.stringify(history));
     }
+  }
+
+  // Calculate hours left for new card
+  function getHoursUntilMidnight() {
+    const now = new Date();
+    const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0); // next local midnight
+    const diffMs = midnight - now;
+    return Math.ceil(diffMs / (1000 * 60 * 60));
   }
 
   const handleNewQuote = () => {
@@ -240,7 +270,11 @@ function App() {
       </button>
       {buttonDisabled && (
         <div style={{ marginTop: '1rem', color: '#6366f1', fontWeight: 500 }}>
-          Come again tomorrow for the next Leela card.
+          Come again tomorrow for the next Leela card.<br />
+          <span style={{color:'#888', fontWeight:400, fontSize:'0.98rem'}}>
+            New card in about {timeLeft.hours} hour{timeLeft.hours !== 1 ? 's' : ''}
+            {timeLeft.minutes > 0 ? ` ${timeLeft.minutes} min${timeLeft.minutes !== 1 ? 's' : ''}` : ''}.
+          </span>
         </div>
       )}
       <div style={{ marginTop: '2rem', display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
