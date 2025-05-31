@@ -113,6 +113,17 @@ const QUOTES = [
 
 ]
 
+const THEMES = [
+  { name: 'Light', value: 'light' },
+  { name: 'Dark', value: 'dark' },
+  { name: 'Purple', value: 'purple' },
+  { name: 'Blue', value: 'blue' },
+];
+
+function applyTheme(theme) {
+  document.body.dataset.theme = theme;
+}
+
 function getRandomQuote() {
   return QUOTES[Math.floor(Math.random() * QUOTES.length)]
 }
@@ -125,6 +136,7 @@ function getTodayKey() {
 function App() {
   const [quote, setQuote] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
+  const [theme, setTheme] = useState(() => localStorage.getItem('leela-theme') || 'light')
   const [error, setError] = useState(null)
 
   useEffect(() => {
@@ -173,6 +185,11 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    applyTheme(theme);
+    localStorage.setItem('leela-theme', theme);
+  }, [theme]);
+
   const handleNewQuote = () => {
     const todayKey = getTodayKey()
     const newQuote = getRandomQuote()
@@ -197,6 +214,18 @@ function App() {
 
   return (
     <div className="app-container">
+      <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%', maxWidth: 370, margin: '0 auto 1.2rem auto' }}>
+        <select
+          value={theme}
+          onChange={e => setTheme(e.target.value)}
+          style={{ borderRadius: 6, padding: '0.3rem 0.7rem', fontSize: '1rem', background: '#f3f4f6', color: '#3730a3', border: '1px solid #d1d5db' }}
+          aria-label="Choose theme"
+        >
+          {THEMES.map(t => (
+            <option key={t.value} value={t.value}>{t.name} Theme</option>
+          ))}
+        </select>
+      </div>
       <h1>Leela Game</h1>
       <div style={{ fontSize: '1.05rem', color: '#444', marginBottom: '1.2rem', fontWeight: 500 }}>
         by Sahaja Yogis for Sahaja Yogis

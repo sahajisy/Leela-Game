@@ -49,6 +49,23 @@ html, body, #root {
   color: #888;
 }
 
+body[data-theme='light'] {
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
+  color: #22223b;
+}
+body[data-theme='dark'] {
+  background: linear-gradient(135deg, #232946 0%, #181824 100%);
+  color: #f3f4f6;
+}
+body[data-theme='purple'] {
+  background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+  color: #fff;
+}
+body[data-theme='blue'] {
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+  color: #fff;
+}
+
 .app-container {
   max-width: 430px;
   min-width: 320px;
@@ -67,6 +84,7 @@ html, body, #root {
   width: 100vw;
   left: 0;
   right: 0;
+  transition: background 0.3s, color 0.3s;
 }
 
 h1 {
@@ -141,4 +159,26 @@ button:active {
   .quote {
     min-height: 90px;
   }
+}
+
+body[data-theme='dark'] .quote,
+body[data-theme='purple'] .quote,
+body[data-theme='blue'] .quote {
+  background: #232946;
+  color: #f3f4f6;
+}
+body[data-theme='dark'] button,
+body[data-theme='purple'] button,
+body[data-theme='blue'] button {
+  background: #6366f1;
+  color: #fff;
+}
+
+body[data-theme='light'] .quote {
+  background: #fff;
+  color: #22223b;
+}
+body[data-theme='light'] button {
+  background: linear-gradient(90deg, #6366f1 0%, #818cf8 100%);
+  color: #fff;
 }
