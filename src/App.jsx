@@ -109,7 +109,9 @@ const QUOTES = [
 "Talk to everyone with an open heart.", 
 "Be patient with yourself and with others.", 
 "Respect yourself, you are the reflection of God Almighty!", 
-"I am a Sahaja Yogi.' You have all the power! May God bless you.'"
+"I am a Sahaja Yogi.", 
+"You have all the power!", 
+"May God bless you."
 
 ]
 
@@ -137,6 +139,47 @@ function getUniqueSeenCount() {
   return seen.size;
 }
 
+function getStreak() {
+  // Get sorted list of all days the user has drawn a card
+  const keys = Object.keys(localStorage).filter(k => k.startsWith('quote-'));
+  const days = keys.map(k => k.replace('quote-', ''));
+  const sorted = days.sort();
+  let streak = 0;
+  let prev = null;
+  for (let i = sorted.length - 1; i >= 0; i--) {
+    const d = sorted[i];
+    const date = new Date(d);
+    if (i === sorted.length - 1) {
+      // Today must be included for streak
+      const todayKey = getTodayKey();
+      if (d !== todayKey) break;
+      streak = 1;
+      prev = date;
+    } else {
+      // Check if previous day
+      const diff = (prev - date) / (1000 * 60 * 60 * 24);
+      if (diff === 1) {
+        streak++;
+        prev = date;
+      } else {
+        break;
+      }
+    }
+  }
+  return streak;
+}
+
+function getAchievements(streak, uniqueSeen, hasSpiritCard, hasAllPowerCard) {
+  const badges = [];
+  if (streak >= 7) badges.push('7-day Streak');
+  if (streak >= 30) badges.push('30-day Streak');
+  if (uniqueSeen >= 50) badges.push('50 Unique Cards');
+  if (uniqueSeen >= 108) badges.push('All Cards Unlocked!');
+  if (hasSpiritCard) badges.push('Spirit Card Unlocked!');
+  if (hasAllPowerCard) badges.push('All the Power Card!');
+  return badges;
+}
+
 function App() {
   const [quote, setQuote] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -145,6 +188,12 @@ function App() {
   const [firstVisit, setFirstVisit] = useState(() => {
     const todayKey = getTodayKey();
     return !localStorage.getItem('quote-' + todayKey);
+  });
+  const [hasSpiritCard, setHasSpiritCard] = useState(() => {
+    return localStorage.getItem('spiritCardUnlocked') === 'true';
+  });
+  const [hasAllPowerCard, setHasAllPowerCard] = useState(() => {
+    return localStorage.getItem('allPowerCardUnlocked') === 'true';
   });
 
   // Calculate time left for new card (live countdown)
@@ -244,6 +293,14 @@ function App() {
     setButtonDisabled(true)
     localStorage.setItem('leela-btn-' + todayKey, 'used')
     setUniqueSeen(getUniqueSeenCount());
+    if (/spirit/i.test(newQuote)) {
+      localStorage.setItem('spiritCardUnlocked', 'true');
+      setHasSpiritCard(true);
+    }
+    if (/you have all the power!/i.test(newQuote)) {
+      localStorage.setItem('allPowerCardUnlocked', 'true');
+      setHasAllPowerCard(true);
+    }
   }
 
   const handleShare = () => {
@@ -258,6 +315,8 @@ function App() {
       alert('Quote copied to clipboard!');
     }
   };
+
+  const streak = getStreak();
 
   return (
     <div className="app-container">
@@ -274,7 +333,8 @@ function App() {
         ) : quote}
       </blockquote>
       <div style={{ margin: '0.5rem 0 1.2rem 0', color: '#6366f1', fontWeight: 500, fontSize: '1.02rem' }}>
-        You have seen {uniqueSeen} out of {QUOTES.length} unique Leela cards.
+        You have seen {uniqueSeen} out of {QUOTES.length} unique Leela cards.<br/>
+        <span style={{color:'#3730a3'}}>Streak: {streak} day{streak !== 1 ? 's' : ''}</span>
       </div>
       <button onClick={handleNewQuote} disabled={buttonDisabled && !firstVisit}>New Leela</button>
       <button onClick={handleShare} style={{ marginTop: '1rem', background: '#818cf8' }} disabled={firstVisit}>

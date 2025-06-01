@@ -12,6 +12,7 @@ A mobile-friendly, theme-aware React (Vite) app that displays a daily random quo
 - **Responsive & Centered:** Looks great on mobile and desktop.
 - **PWA:** Add to home screen, works offline, and supports notifications (where available).
 - **About Page:** Learn more about the app and its inspiration.
+- **Achievements:** Earn badges for 7-day streak, 30-day streak, 50 unique cards, all cards unlocked, unlocking a Spirit card, and unlocking the "All the Power" card.
 
 ## Getting Started
 1. **Install dependencies:**
