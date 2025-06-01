@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Analytics } from '@vercel/analytics/react'
 import './index.css'
 import App from './App.jsx'
 import LeelaGame from './LeelaGame.jsx'
@@ -12,5 +13,6 @@ const showHistory = path === '/history';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {showLeela ? <LeelaGame /> : showHistory ? <History /> : <App />}
+    <Analytics />
   </StrictMode>,
 )
