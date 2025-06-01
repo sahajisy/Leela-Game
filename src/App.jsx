@@ -316,8 +316,6 @@ function App() {
     }
   };
 
-  const streak = getStreak();
-
   return (
     <div className="app-container">
       <h1>Leela Game</h1>
@@ -332,10 +330,6 @@ function App() {
           </span>
         ) : quote}
       </blockquote>
-      <div style={{ margin: '0.5rem 0 1.2rem 0', color: '#6366f1', fontWeight: 500, fontSize: '1.02rem' }}>
-        You have seen {uniqueSeen} out of {QUOTES.length} unique Leela cards.<br/>
-        <span style={{color:'#3730a3'}}>Streak: {streak} day{streak !== 1 ? 's' : ''}</span>
-      </div>
       <button onClick={handleNewQuote} disabled={buttonDisabled && !firstVisit}>New Leela</button>
       <button onClick={handleShare} style={{ marginTop: '1rem', background: '#818cf8' }} disabled={firstVisit}>
         Share Leela
