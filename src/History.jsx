@@ -90,6 +90,10 @@ export default function History() {
   return (
     <div className="app-container">
       <h1>Leela History</h1>
+      <div style={{ margin: '0.5rem 0 1.2rem 0', color: '#6366f1', fontWeight: 500, fontSize: '1.02rem' }}>
+        You have seen {uniqueSeen} unique Leela cards.<br/>
+        <span style={{color:'#3730a3'}}>Streak: {streak} day{streak !== 1 ? 's' : ''}</span>
+      </div>
       {achievements.length > 0 && (
         <div style={{marginBottom: '1.5rem'}}>
           <div style={{color:'#a16207', fontWeight:600, fontSize:'1.01rem', marginBottom:4}}>Achievements</div>
