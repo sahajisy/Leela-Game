@@ -11,6 +11,7 @@ export default function History() {
   const [uniqueSeen, setUniqueSeen] = useState(0);
   const [hasSpiritCard, setHasSpiritCard] = useState(false);
   const [hasAllPowerCard, setHasAllPowerCard] = useState(false);
+  const [hasFirstCard, setHasFirstCard] = useState(false);
   const [achievements, setAchievements] = useState([]);
 
   useEffect(() => {
@@ -52,8 +53,9 @@ export default function History() {
       }
       return streak;
     }
-    function getAchievements(streak, uniqueSeen, hasSpiritCard, hasAllPowerCard) {
+    function getAchievements(streak, uniqueSeen, hasSpiritCard, hasAllPowerCard, hasFirstCard) {
       const badges = [];
+      if (hasFirstCard) badges.push('First Card Pulled!');
       if (streak >= 7) badges.push('7-day Streak');
       if (streak >= 30) badges.push('30-day Streak');
       if (uniqueSeen >= 50) badges.push('50 Unique Cards');
@@ -66,12 +68,24 @@ export default function History() {
     const uniqueSeenVal = getUniqueSeenCount();
     const spirit = localStorage.getItem('spiritCardUnlocked') === 'true';
     const allPower = localStorage.getItem('allPowerCardUnlocked') === 'true';
+    // Check if the user has ever pulled a card (any quote- key exists)
+    // and if the current history contains the very first card ever pulled
+    let hasFirstCard = false;
+    const allQuoteKeys = Object.keys(localStorage).filter(key => key.startsWith('quote-'));
+    if (allQuoteKeys.length > 0) {
+      // Find the earliest date
+      const firstDate = allQuoteKeys.map(k => k.replace('quote-', '')).sort()[0];
+      const firstCard = localStorage.getItem('quote-' + firstDate);
+      // If the user's history includes the first card ever pulled, show badge
+      hasFirstCard = history.some(entry => entry.date === firstDate);
+    }
     setStreak(streakVal);
     setUniqueSeen(uniqueSeenVal);
     setHasSpiritCard(spirit);
     setHasAllPowerCard(allPower);
-    setAchievements(getAchievements(streakVal, uniqueSeenVal, spirit, allPower));
-  }, []);
+    setHasFirstCard(hasFirstCard);
+    setAchievements(getAchievements(streakVal, uniqueSeenVal, spirit, allPower, hasFirstCard));
+  }, [history.length]);
 
   return (
     <div className="app-container">
