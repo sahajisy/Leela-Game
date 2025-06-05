@@ -132,7 +132,6 @@ export default function History() {
         padding: '0.7rem 0',
         width: '100%',
         textAlign: 'center',
-        borderTop: '1px solid #e0e7ff',
         boxShadow: '0 -2px 8px rgba(55,48,163,0.04)'
       }}>Back to Leela</a>
     </div>
