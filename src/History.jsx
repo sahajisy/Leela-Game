@@ -15,6 +15,8 @@ export default function History() {
   const [achievements, setAchievements] = useState([]);
 
   useEffect(() => {
+    // Scroll to top on mount so the user always sees the top info first
+    window.scrollTo(0, 0);
     setHistory(getHistory());
     // Calculate streak, uniqueSeen, and badges
     function getUniqueSeenCount() {
@@ -118,7 +120,21 @@ export default function History() {
           ))}
         </ul>
       )}
-      <a href="/" style={{marginTop: '2rem', display: 'inline-block', color: '#6366f1', textDecoration: 'underline'}}>Back to Leela</a>
+      <a href="/" style={{
+        marginTop: '2rem',
+        display: 'inline-block',
+        color: '#6366f1',
+        textDecoration: 'underline',
+        position: 'sticky',
+        bottom: 0,
+        background: '#fff',
+        zIndex: 10,
+        padding: '0.7rem 0',
+        width: '100%',
+        textAlign: 'center',
+        borderTop: '1px solid #e0e7ff',
+        boxShadow: '0 -2px 8px rgba(55,48,163,0.04)'
+      }}>Back to Leela</a>
     </div>
   );
 }
