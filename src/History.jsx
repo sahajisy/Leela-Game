@@ -88,7 +88,7 @@ export default function History() {
   }, [history.length]);
 
   return (
-    <div className="app-container">
+    <div className="app-container" style={{overflowY: 'auto', maxHeight: '100vh'}}>
       <h1>Leela History</h1>
       <div style={{ margin: '0.5rem 0 1.2rem 0', color: '#6366f1', fontWeight: 500, fontSize: '1.02rem' }}>
         You have seen {uniqueSeen} unique Leela cards.<br/>
