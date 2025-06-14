@@ -49,4 +49,5 @@ A mobile-friendly, theme-aware React (Vite) app that displays a daily random quo
 
 ---
 - Inspired by the teachings of **H.H Shri Mataji Nirmala Devi.**
-- Created by Sahaj Balgunde. Project backed by: Georgiana Nicoara (Indian Studies Enthusiast)
+- Project backed by: Georgiana Nicoara (Indian Studies Enthusiast)
+- Created by Sahaj Balgunde (かんたんです).
