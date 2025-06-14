@@ -48,5 +48,5 @@ A mobile-friendly, theme-aware React (Vite) app that displays a daily random quo
 - [GitHub Issues](https://github.com/sahajisy/leela-game/issues) – Suggestions and bug reports welcome!
 
 ---
-Inspired by the teachings of H.H Shri Mataji Nirmala Devi.
-Created by Sahaj Balgunde. Project backed by: Georgiana Nicoara (Indian Studies Enthusiast)
+- Inspired by the teachings of ** H.H Shri Mataji Nirmala Devi. **
+- Created by Sahaj Balgunde. Project backed by: Georgiana Nicoara (Indian Studies Enthusiast)
