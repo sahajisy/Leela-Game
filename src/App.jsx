@@ -76,7 +76,7 @@ const QUOTES = [
 "If there is a disappointment, just smile at it and know it is for your good.", 
 "Pray: Give me a sweet tongue by which I become communicative with others.", 
 "Feel your spirit and enjoy this wonderful life… the life of a realised soul!", 
-"Pray with your heart: 'lease give me the strength so that I am genuine.'", 
+"Pray with your heart: 'Please give me the strength so that I am genuine.'", 
 "We have to be tolerant with others and accept all the differences.", 
 "Be collective! Don't think that you are something special!", 
 "Shri Durga Mata is giving you confidence in yourself!", 
